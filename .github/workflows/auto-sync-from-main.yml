@@ -1,0 +1,36 @@
+name: Sync PRs with Main (Labeled Only)
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update-prs:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Merge main into labeled PRs
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Filter: Only select open PRs targeting 'main' WITH the label 'auto-sync'
+          
+          echo "Looking for PRs with label 'auto-sync'..."
+          
+          gh pr list \
+            --base main \
+            --state open \
+            --label "auto-sync" \
+            --json number \
+            --limit 100 \
+            | jq -c '.[]' | while read pr; do
+            
+            PR_NUM=$(echo $pr | jq .number)
+            echo "Processing PR #$PR_NUM..."
+            gh pr update $PR_NUM --branch || echo "❌ Could not update PR #$PR_NUM"
+          done
