@@ -1,5 +1,6 @@
 name: Sync PRs with Main (Labeled Only)
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
