@@ -33,5 +33,5 @@ jobs:
             
             PR_NUM=$(echo $pr | jq .number)
             echo "Processing PR #$PR_NUM..."
-            gh pr update $PR_NUM --branch || echo "❌ Could not update PR #$PR_NUM"
+            gh pr update-branch $PR_NUM || echo "❌ Could not update PR #$PR_NUM"
           done
