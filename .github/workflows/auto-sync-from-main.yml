@@ -1,9 +1,9 @@
-name: Sync PRs with Main (Labeled Only)
+name: Sync PRs with master (Labeled Only)
 on:
   workflow_dispatch:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   update-prs:
@@ -15,16 +15,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Merge main into labeled PRs
+      - name: Merge master into labeled PRs
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Filter: Only select open PRs targeting 'main' WITH the label 'auto-sync'
+          # Filter: Only select open PRs targeting 'master' WITH the label 'auto-sync'
           
           echo "Looking for PRs with label 'auto-sync'..."
           
           gh pr list \
-            --base main \
+            --base master \
             --state open \
             --label "auto-sync" \
             --json number \
@@ -33,5 +33,5 @@ jobs:
             
             PR_NUM=$(echo $pr | jq .number)
             echo "Processing PR #$PR_NUM..."
-            gh pr update $PR_NUM --branch || echo "❌ Could not update PR #$PR_NUM"
+            gh pr update-branch $PR_NUM || echo "❌ Could not update PR #$PR_NUM"
           done
