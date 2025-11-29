@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - 'main'
+      - 'master'
       - 'feature/**' # Triggers on any branch inside the feature/ folder
 
 permissions:
