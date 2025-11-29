@@ -37,15 +37,15 @@ jobs:
           SAFE_BRANCH_NAME=$(echo "$RAW_BRANCH_NAME" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9._-]/-/g')
           
           # 3. Construct the Version
-          if [[ "$RAW_BRANCH_NAME" == "main" ]]; then
-            echo "On main branch - analyzing commits for SemVer bump..."
+          if [[ "$RAW_BRANCH_NAME" == "main" || "$RAW_BRANCH_NAME" == "master" ]]; then
+            echo "On main/master branch - analyzing commits for SemVer bump..."
             
             # Get commit subjects since the last tag
             COMMITS=$(git log "$LATEST_TAG"..HEAD --format="%s")
             # Get commit bodies (for BREAKING CHANGE footer)
             BODIES=$(git log "$LATEST_TAG"..HEAD --format="%b")
             
-            # Default to patch (safest assumption for any merge to main)
+            # Default to patch (safest assumption for any merge to main/master)
             BUMP_TYPE="patch"
             
             # LOGIC: Check for Major > Minor > Patch
@@ -79,7 +79,7 @@ jobs:
             fi
             
             NEW_VERSION="p$major.$minor.$patch"
-            echo "Bumping main to: $NEW_VERSION"
+            echo "Bumping main/master to: $NEW_VERSION"
             
           else
             # STRATEGY: Parallel Prerelease
