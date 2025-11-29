@@ -29,7 +29,7 @@ jobs:
         id: version_step
         run: |
           # 1. Get the latest Git tag. Default to p0.0.0 if none exists.
-          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "p0.0.0")
+          LATEST_TAG=$(git tag -l   | grep -E '^p[0-9]+\.[0-9]+\.[0-9]+$'   | sort -V   | tail -n 1 2>/dev/null || echo "p0.0.0")
           echo "Latest Tag: $LATEST_TAG"
           
           # 2. Get the current branch name
@@ -37,6 +37,11 @@ jobs:
           SAFE_BRANCH_NAME=$(echo "$RAW_BRANCH_NAME" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9._-]/-/g')
           echo "SAFE_BRANCH_NAME is $SAFE_BRANCH_NAME"
           
+          # Remove 'p' prefix and any suffixes (like -beta.1) for calculation
+          CLEAN_VER=${LATEST_TAG#p}       # 1.2.3-beta.1
+          CLEAN_VER=${CLEAN_VER%%-*}      # 1.2.3 (Base version)
+          echo "CLEAN_VER is $CLEAN_VER"
+
           # 3. Construct the Version
           if [[ "$RAW_BRANCH_NAME" == "main" ]] || [[ "$RAW_BRANCH_NAME" == "master" ]]; then
             echo "On main/master branch - analyzing commits for SemVer bump..."
@@ -61,10 +66,6 @@ jobs:
             echo "Detected bump type: $BUMP_TYPE"
             
             # PARSE: Extract numbers from p1.2.3
-            # Remove 'p' prefix and any suffixes (like -beta.1) for calculation
-            CLEAN_VER=${LATEST_TAG#p}       # 1.2.3-beta.1
-            CLEAN_VER=${CLEAN_VER%%-*}      # 1.2.3 (Base version)
-            echo "CLEAN_VER is $CLEAN_VER"
             IFS='.' read -r major minor patch <<< "$CLEAN_VER"
             
             # CALCULATE: Increment numbers
