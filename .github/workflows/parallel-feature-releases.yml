@@ -125,4 +125,4 @@ jobs:
         run: |
           VERSION="${{ needs.calculate-and-tag.outputs.new_version }}"
           echo "Building artifact version: $VERSION"
-          mvn --batch-mode verify -Drevision=$VERSOIN
+          mvn --batch-mode verify -Drevision=$VERSION
