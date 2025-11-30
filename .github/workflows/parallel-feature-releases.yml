@@ -115,8 +115,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
-      - name: Mock Build Artifact
+      - name: Setup java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+      - name: Build
         run: |
           VERSION="${{ needs.calculate-and-tag.outputs.new_version }}"
           echo "Building artifact version: $VERSION"
+          mvn --batch-mode verify -Drevision=$VERSOIN
