@@ -16,6 +16,11 @@ scopes per type.
 semver-checkers
 * https://jubianchi.github.io/semver-check/#/^0.0.1/0.0.1-feature-feature3-date.20251211-job.3
 
+## Maven
+
+* ci friendly versions: https://maven.apache.org/guides/mini/guide-maven-ci-friendly.html (use `${revision}`, `${sha1}`
+  and `${changelist}` as placeholders in pom file)
+
 
 ## LLM Chat References
 
