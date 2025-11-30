@@ -96,7 +96,7 @@ jobs:
         # Only tag if it's a new calculated version
         run: |
           NEW_VER="${{ steps.version_step.outputs.version }}"
-          
+          echo "Checking for tag existence"
           # check if tag exists (to prevent erroring on double-runs)
           if git rev-parse "p$NEW_VER" >/dev/null 2>&1; then
             echo "Tag p$NEW_VER already exists. Skipping."
