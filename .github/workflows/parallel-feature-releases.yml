@@ -80,16 +80,16 @@ jobs:
               patch=$((patch + 1))
             fi
             
-            NEW_VERSION="p$major.$minor.$patch"
-            echo "Bumping main/master to: $NEW_VERSION"
+            NEW_VERSION="$major.$minor.$patch"
+            echo "Bumping main/master to: p$NEW_VERSION"
             
           else
             # STRATEGY: Parallel Prerelease
             # Format: [BaseTag]-[SanitizedBranch].[RunNumber]
-            NEW_VERSION="${LATEST_TAG}-${SAFE_BRANCH_NAME}.${{ github.run_number }}"
+            NEW_VERSION="p${LATEST_TAG}-${SAFE_BRANCH_NAME}.${{ github.run_number }}"
           fi
           
-          echo "Final Version: $NEW_VERSION"
+          echo "Final Version: p$NEW_VERSION"
           echo "version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Create Git Tag
@@ -98,13 +98,13 @@ jobs:
           NEW_VER="${{ steps.version_step.outputs.version }}"
           
           # check if tag exists (to prevent erroring on double-runs)
-          if git rev-parse "$NEW_VER" >/dev/null 2>&1; then
-            echo "Tag $NEW_VER already exists. Skipping."
+          if git rev-parse "p$NEW_VER" >/dev/null 2>&1; then
+            echo "Tag p$NEW_VER already exists. Skipping."
           else
             echo "Tagging commit with $NEW_VER"
             git config user.name "GitHub Actions"
             git config user.email "actions@github.com"
-            git tag -a "$NEW_VER" -m "Automated release for $NEW_VER"
+            git tag -a "p$NEW_VER" -m "Automated release for $NEW_VER"
             git push origin "$NEW_VER"
           fi
 
@@ -126,3 +126,8 @@ jobs:
           VERSION="${{ needs.calculate-and-tag.outputs.new_version }}"
           echo "Building artifact version: $VERSION"
           mvn --batch-mode verify -Drevision=$VERSION -Dchangelist=""
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: jar
+          path: target/github-actions-playground-root-$NEW_VER.jar
