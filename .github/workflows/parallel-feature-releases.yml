@@ -86,7 +86,7 @@ jobs:
           else
             # STRATEGY: Parallel Prerelease
             # Format: [BaseTag]-[SanitizedBranch].[RunNumber]
-            NEW_VERSION="p${LATEST_TAG}-${SAFE_BRANCH_NAME}.${{ github.run_number }}"
+            NEW_VERSION="${LATEST_TAG}-${SAFE_BRANCH_NAME}.${{ github.run_number }}"
           fi
           
           echo "Final Version: p$NEW_VERSION"
