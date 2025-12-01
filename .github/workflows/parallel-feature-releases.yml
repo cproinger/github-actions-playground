@@ -131,3 +131,4 @@ jobs:
         with:
           name: jar
           path: "target/github-actions-playground-root-${{ needs.calculate-and-tag.outputs.new_version }}.jar"
+          retention-days: 30
