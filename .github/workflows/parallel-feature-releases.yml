@@ -101,11 +101,11 @@ jobs:
           if git rev-parse "p$NEW_VER" >/dev/null 2>&1; then
             echo "Tag p$NEW_VER already exists. Skipping."
           else
-            echo "Tagging commit with $NEW_VER"
+            echo "Tagging commit with p$NEW_VER"
             git config user.name "GitHub Actions"
             git config user.email "actions@github.com"
-            git tag -a "p$NEW_VER" -m "Automated release for $NEW_VER"
-            git push origin "$NEW_VER"
+            git tag -a "p$NEW_VER" -m "Automated release for p$NEW_VER"
+            git push origin "p$NEW_VER"
           fi
 
   # Example of how to use this version in a build step
