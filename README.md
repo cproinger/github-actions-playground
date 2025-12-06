@@ -27,3 +27,11 @@ semver-checkers
 * Git Versioning for Parallel Releaes: https://gemini.google.com/share/c92a1b820300
 * Git Commit Messages Hooks on Windows: https://gemini.google.com/share/b87422106aa5
 * Find latest git tag: https://chatgpt.com/share/692b4b11-4fb4-800b-9f1c-3ac33ddc9427
+
+## Web References
+
+* feature-branch approach for npm-libs: https://oleksiipopov.com/blog/feature-branches-approach-in-ci-cd-of-npm-libraries/
+  * the root npm package.json contains fish-atlas-sdk with version ^1.0.0
+  * `npm i` resolves exactly that version
+  * `npm update fish-atlas-sdk --save` will update it to ^1.1.0 but not to 1.1.1-main.1 as https://jubianchi.github.io/semver-check/#/^1.0.0/1.1.1-main.1 would suggest
+  * 
