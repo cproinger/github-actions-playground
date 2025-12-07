@@ -27,6 +27,7 @@ semver-checkers
 * Git Versioning for Parallel Releaes: https://gemini.google.com/share/c92a1b820300
 * Git Commit Messages Hooks on Windows: https://gemini.google.com/share/b87422106aa5
 * Find latest git tag: https://chatgpt.com/share/692b4b11-4fb4-800b-9f1c-3ac33ddc9427
+* Artifactory versioning strategy: https://chatgpt.com/share/693553bd-fa10-800b-928e-59d3e58e733d
 
 ## Web References
 
