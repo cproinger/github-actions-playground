@@ -10,6 +10,14 @@ In order to use github-actions that parse commit-messages we enforce commit-mess
 May introduce https://github.com/ridvanaltun/commitlint-plugin-selective-scope later to define valid 
 scopes per type. 
 
+# changeset based versioning
+
+* https://github.com/changesets/changesets
+  * creates markdown-files with yml-frontmatter in .changeset with random filename ... can be changed manually
+  * changes root package.json version etc. ... for a non-npm project this may unneccesarily lead to merge-conflicts
+* https://github.com/miniscruff/changie
+  * similar to changesets but single file ... more lightweight
+
 
 ## semver
 
@@ -20,7 +28,6 @@ semver-checkers
 
 * ci friendly versions: https://maven.apache.org/guides/mini/guide-maven-ci-friendly.html (use `${revision}`, `${sha1}`
   and `${changelist}` as placeholders in pom file)
-
 
 ## LLM Chat References
 
