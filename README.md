@@ -16,7 +16,7 @@ scopes per type.
   * creates markdown-files with yml-frontmatter in .changeset with random filename ... can be changed manually
   * changes root package.json version etc. ... for a non-npm project this may unneccesarily lead to merge-conflicts
 * https://github.com/miniscruff/changie
-  * similar to changesets but single file ... more lightweight
+  * similar to changesets but single file ... more lightweight ... but runs an executable via npx ... signing *sigh*
 
 
 ## semver
